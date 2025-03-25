@@ -10,7 +10,7 @@
     "wasm:build": "cd .. && wasm-pack build --target web",
     "wasm:copy": "mkdir -p public/wasm && cp ../pkg/breakfast_bg.wasm ../pkg/breakfast.js ../pkg/breakfast_bg.js public/wasm/",
     "prepare": "npm run wasm:build && npm run wasm:copy",
-    "vercel-build": "npm run prepare && npm run build"
+    "vercel-build": "next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
