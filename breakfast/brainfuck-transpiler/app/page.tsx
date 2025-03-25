@@ -187,22 +187,7 @@ export default function BrainfuckTranspiler() {
         </Alert>
       )}
 
-      <div className="mt-8 p-4 bg-muted rounded-lg">
-        <h2 className="text-xl font-semibold mb-2">How to integrate your Rust transpiler</h2>
-        <ol className="list-decimal pl-5 space-y-2">
-          <li>
-            Compile your Rust transpiler to WebAssembly using <code>wasm-pack</code> or similar tools
-          </li>
-          <li>
-            Import the compiled <code>.wasm</code> file in this application using{" "}
-            <code>import wasmModule from './path-to-your-file.wasm?module'</code>
-          </li>
-          <li>Instantiate the WebAssembly module and call your transpiler function</li>
-          <li>
-            Replace the placeholder implementation in the <code>transpileToCWithWasm</code> function
-          </li>
-        </ol>
-      </div>
+      
       <Toaster />
     </div>
   )
