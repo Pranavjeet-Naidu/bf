@@ -20,7 +20,7 @@ export function middleware(request: NextRequest) {
   // Add Content-Security-Policy to mitigate XSS attacks
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; child-src 'none';"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; child-src 'none';"
   );
 
   return response;
