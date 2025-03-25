@@ -1,8 +1,8 @@
 {
-  "buildCommand": "npm run vercel-build",
+  "buildCommand": "curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh && npm run vercel-build",
   "outputDirectory": ".next",
   "devCommand": "npm run dev",
-  "installCommand": "npm install --legacy-peer-deps",
+  "installCommand": "npm install --legacy-peer-deps --no-audit --no-fund --ignore-scripts",
   "framework": "nextjs",
   "regions": ["iad1"],
   "headers": [

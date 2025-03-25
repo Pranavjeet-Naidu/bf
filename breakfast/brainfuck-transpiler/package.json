@@ -9,8 +9,9 @@
     "lint": "next lint",
     "wasm:build": "cd .. && wasm-pack build --target web",
     "wasm:copy": "mkdir -p public/wasm && cp ../pkg/breakfast_bg.wasm ../pkg/breakfast.js ../pkg/breakfast_bg.js public/wasm/",
-    "prepare": "npm run wasm:build && npm run wasm:copy",
-    "vercel-build": "next build"
+    "wasm:prepare": "npm run wasm:build && npm run wasm:copy",
+    "prepare": "npm run wasm:prepare",
+    "vercel-build": "npm run wasm:prepare && next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
