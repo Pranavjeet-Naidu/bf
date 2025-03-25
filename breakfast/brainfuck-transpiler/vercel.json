@@ -1,5 +1,5 @@
 {
-  "buildCommand": "curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh && npm run vercel-build",
+  "buildCommand": "bash -c 'curl --proto \"=https\" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && export PATH=\"$HOME/.cargo/bin:$PATH\" && curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh && export PATH=\"$PATH:$HOME/.cargo/bin\" && which wasm-pack && npm run vercel-build'",
   "outputDirectory": ".next",
   "devCommand": "npm run dev",
   "installCommand": "npm install --legacy-peer-deps --no-audit --no-fund --ignore-scripts",
