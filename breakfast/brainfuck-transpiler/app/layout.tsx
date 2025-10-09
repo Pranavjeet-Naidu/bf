@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 }
 
 // this is to test out that path 
+// more testing ig
 export default function RootLayout({
   children,
 }: Readonly<{
