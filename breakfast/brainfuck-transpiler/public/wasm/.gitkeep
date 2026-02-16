@@ -1,2 +1,0 @@
-// This file ensures the wasm directory is tracked by Git
-// WebAssembly files should be placed in this directory for deployment 
