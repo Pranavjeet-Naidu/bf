@@ -14,13 +14,15 @@ async function initWasm() {
         await init.default();
         wasmModule = init;
 
-        header.classList.add('ready');
-        statusText.textContent = 'SYSTEM READY';
-        transpileBtn.disabled = false;
+        if (header) header.classList.add('ready');
+        if (statusText) statusText.textContent = 'SYSTEM READY';
+        if (transpileBtn) transpileBtn.disabled = false;
     } catch (err) {
         console.error('Failed to load WASM:', err);
-        statusText.textContent = 'SYSTEM ERROR';
-        statusText.style.color = 'var(--accent)';
+        if (statusText) {
+            statusText.textContent = 'SYSTEM ERROR';
+            statusText.style.color = 'var(--accent)';
+        }
         showError('Failed to load WebAssembly module. Please refresh the page.');
     }
 }

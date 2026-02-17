@@ -30,17 +30,6 @@
           </svg>
         </button>
       </div>
-
-      <div class="meta">
-        <div>
-          <span>B-F Transpiler</span><br>
-          <span style="opacity: 0.5">v1.0.0</span>
-        </div>
-        <div>
-          <span class="status-dot"></span>
-          <span id="wasm-status-text">INIT WASM...</span>
-        </div>
-      </div>
     </header>
 
     <!-- Main Grid -->
@@ -48,8 +37,8 @@
       <!-- Input Pane -->
       <section class="pane">
         <div class="pane-header">
-          <span>01 / Input</span>
-          <button class="btn-sm" id="load-example">Example</button>
+          <span>Input</span>
+          <button class="btn-sm" style="visibility: hidden;" aria-hidden="true" tabindex="-1">Copy</button>
         </div>
         <textarea class="editor" id="bf-input" spellcheck="false"
           placeholder="ENTER BRAINFUCK CODE...">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>[<]<-]>>. >---. +++++++.. +++. >>. <-. <. +++. ------. --------. >>+. >++.</textarea>
@@ -58,7 +47,7 @@
       <!-- Output Pane -->
       <section class="pane">
         <div class="pane-header">
-          <span>02 / Output</span>
+          <span>Output</span>
           <button class="btn-sm" id="copy-btn" disabled>Copy</button>
         </div>
         <textarea class="editor" id="c-output" readonly spellcheck="false" placeholder="C CODE OUTPUT..."></textarea>
@@ -69,16 +58,34 @@
     <div class="controls-wrapper">
       <div class="controls">
         <button id="transpile-btn" disabled>Transpile</button>
-        <button id="theme-toggle" aria-label="Toggle Theme">Theme</button>
       </div>
     </div>
 
+    <!-- Theme toggle (corner) -->
+    <button id="theme-toggle" class="theme-btn-corner" aria-label="Toggle Theme" title="Toggle theme">
+      <!-- Sun (light) -->
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="M20 12h2"></path>
+        <path d="M2 12H4"></path>
+        <path d="M18.36 5.64l1.41 1.41"></path>
+        <path d="M4.22 19.78l1.41-1.41"></path>
+        <path d="M18.36 18.36l1.41-1.41"></path>
+        <path d="M4.22 4.22l1.41 1.41"></path>
+      </svg>
+      <!-- Moon (dark) -->
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+      </svg>
+    </button>
+
     <!-- Footer -->
     <footer class="footer">
-      <span>© 2026 BF-C Project</span>
       <div style="display: flex; gap: 24px;">
         <a href="https://github.com/Pranavjeet-Naidu/bf" target="_blank">Source</a>
-        <a href="#">About</a>
+        <a href="https://gist.github.com/roachhd/dce54bec8ba55fb17d3a">About</a>
       </div>
     </footer>
   </div>
