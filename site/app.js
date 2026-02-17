@@ -5,22 +5,22 @@
 let wasmModule = null;
 
 async function initWasm() {
-    const badge = document.getElementById('wasm-badge');
     const statusText = document.getElementById('wasm-status-text');
     const transpileBtn = document.getElementById('transpile-btn');
+    const header = document.querySelector('.header');
 
     try {
         const init = await import('./wasm/bf.js');
         await init.default();
         wasmModule = init;
 
-        badge.classList.add('ready');
-        statusText.textContent = 'WASM Ready';
+        header.classList.add('ready');
+        statusText.textContent = 'SYSTEM READY';
         transpileBtn.disabled = false;
     } catch (err) {
         console.error('Failed to load WASM:', err);
-        badge.classList.add('error');
-        statusText.textContent = 'WASM Failed';
+        statusText.textContent = 'SYSTEM ERROR';
+        statusText.style.color = 'var(--accent)';
         showError('Failed to load WebAssembly module. Please refresh the page.');
     }
 }
@@ -60,7 +60,6 @@ function transpile() {
     const input = document.getElementById('bf-input');
     const output = document.getElementById('c-output');
     const copyBtn = document.getElementById('copy-btn');
-    const clearBtn = document.getElementById('clear-btn');
     const errorBar = document.getElementById('error-bar');
 
     if (!wasmModule) {
@@ -87,7 +86,6 @@ function transpile() {
 
         output.value = result;
         copyBtn.disabled = false;
-        clearBtn.disabled = false;
     } catch (err) {
         showError(`Transpilation failed: ${err.message || err}`);
     }
@@ -100,29 +98,25 @@ function transpile() {
 async function copyOutput() {
     const output = document.getElementById('c-output');
     const copyBtn = document.getElementById('copy-btn');
-    const copyIcon = copyBtn.querySelector('.copy-icon');
-    const checkIcon = copyBtn.querySelector('.check-icon');
-    const copyText = copyBtn.querySelector('.copy-text');
 
     if (!output.value) return;
 
     try {
         await navigator.clipboard.writeText(output.value);
 
-        // Visual feedback
-        copyIcon.style.display = 'none';
-        checkIcon.style.display = 'block';
-        copyText.textContent = 'Copied!';
+        // Visual feedback (Text only)
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = 'COPIED!';
 
         setTimeout(() => {
-            copyIcon.style.display = '';
-            checkIcon.style.display = 'none';
-            copyText.textContent = 'Copy';
+            copyBtn.textContent = originalText;
         }, 2000);
     } catch (err) {
-        // Fallback for older browsers / non-https
+        // Fallback
         output.select();
         document.execCommand('copy');
+        copyBtn.textContent = 'COPIED!';
+        setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
     }
 }
 
@@ -132,27 +126,23 @@ async function copyOutput() {
 
 function showError(message) {
     const errorBar = document.getElementById('error-bar');
-    const errorText = document.getElementById('error-text');
-    errorText.textContent = message;
+    errorBar.textContent = message;
     errorBar.hidden = false;
-}
 
-function clearOutput() {
-    const output = document.getElementById('c-output');
-    const copyBtn = document.getElementById('copy-btn');
-    const clearBtn = document.getElementById('clear-btn');
-    const errorBar = document.getElementById('error-bar');
-
-    output.value = '';
-    copyBtn.disabled = true;
-    clearBtn.disabled = true;
-    errorBar.hidden = true;
+    // Auto-hide error after 5 seconds
+    setTimeout(() => {
+        errorBar.hidden = true;
+    }, 5000);
 }
 
 function loadExample() {
     const input = document.getElementById('bf-input');
+    // Just clear it and set value
     input.value = '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>[<]<-]>>. >---. +++++++.. +++. >>. <-. <. +++. ------. --------. >>+. >++.';
-    input.focus();
+    // Trigger transpile automatically for instant gratification
+    if (wasmModule) {
+        transpile();
+    }
 }
 
 // ============================================
@@ -163,22 +153,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Init WASM
     initWasm();
 
-    // Theme toggle
-    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+    // Theme toggles
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+    const themeBtnMobile = document.getElementById('theme-toggle-mobile');
+    if (themeBtnMobile) themeBtnMobile.addEventListener('click', toggleTheme);
 
     // Transpile
-    document.getElementById('transpile-btn').addEventListener('click', transpile);
+    const transpileBtn = document.getElementById('transpile-btn');
+    if (transpileBtn) transpileBtn.addEventListener('click', transpile);
 
     // Copy
-    document.getElementById('copy-btn').addEventListener('click', copyOutput);
-
-    // Clear
-    document.getElementById('clear-btn').addEventListener('click', clearOutput);
+    const copyBtn = document.getElementById('copy-btn');
+    if (copyBtn) copyBtn.addEventListener('click', copyOutput);
 
     // Example
-    document.getElementById('load-example').addEventListener('click', loadExample);
+    const exampleBtn = document.getElementById('load-example');
+    if (exampleBtn) exampleBtn.addEventListener('click', loadExample);
 
-    // Keyboard shortcut: Ctrl+Enter / Cmd+Enter to transpile
+    // Keyboard shortcut: Ctrl+Enter / Cmd+Enter
     document.getElementById('bf-input').addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
             e.preventDefault();
@@ -188,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        // Only auto-switch if user hasn't manually set a preference
         if (!localStorage.getItem('bf-theme')) {
             setTheme(e.matches ? 'dark' : 'light');
         }
