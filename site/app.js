@@ -11,7 +11,7 @@ async function initWasm() {
 
     try {
         const init = await import('./wasm/bf.js');
-        await init.default('./wasm/bf_bg.wasm');
+        await init.default();
         wasmModule = init;
 
         badge.classList.add('ready');
