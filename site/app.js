@@ -140,7 +140,7 @@ function showError(message) {
 function loadExample() {
     const input = document.getElementById('bf-input');
     // Just clear it and set value
-    input.value = '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>[<]<-]>>. >---. +++++++.. +++. >>. <-. <. +++. ------. --------. >>+. >++.';
+    input.value = '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.';
     // Trigger transpile automatically for instant gratification
     if (wasmModule) {
         transpile();
